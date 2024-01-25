@@ -80,16 +80,27 @@ console.log(ted);
 
 */
 
-// inheritence  can make a super class where you can make sub classes that can use the function of the superclass
-//POLYMORPHISM
-//
+/* inheritence((used alot in react)  can make a super class where you can make sub classes that can use the function of the superclass
+//POLYMORPHISM there needs to be 2 things to be aware of
+//    * overiding --- name of function is the same, paraemeters the same and body is different
+//    *overloading---  name being the same and the parameters are different
+
+// Encapsulation -- hiding  of data to use you need --getters and setters
+
 class Person {
   constructor(id, name, age, email) {
-    this.id = id;
+    this._id = id;
     this.name = name;
     this.age = age;
     this.email = email;
   }
+  get id() {
+    return this._id;
+  }
+  set id(id) {
+    this._id = id;
+  }
+
   showDetails() {
     return `
     ID: ${this.id}
@@ -151,8 +162,43 @@ const amo = new Student(
   ["Maths", "English", "Science"],
   "amatlala1510@gmail.com"
 );
-amo.addSubject("uhm testing");
-amo.showDetails();
+// amo.addSubject("uhm testing");
+// amo.showDetails();
 
-const parent = new Parent(14, "Hope", 47, "hopeluv@gmail.com");
-parent.showDetails();
+// const parent = new Parent(14, "Hope", 47, "hopeluv@gmail.com");
+// parent.showDetails();
+
+amo.id = 123;
+amo.showDetails();
+*/
+
+// this binding
+//amazon wishlist
+const isAuthenticated = false;
+let user = {
+  wishlist: [],
+};
+class Product {
+  constructor(name, price) {
+    this.name = name;
+    this.price = price;
+    this.addToWishList = this.addToWishList.bind(this); //binding the this keyword
+  }
+
+  handleAddToWishlist() {
+    if (isAuthenticated) {
+      setTimeout(this.addToWishList, 1000);
+    } else {
+      console.log("Please sign in to add items to the wishlist");
+    }
+  }
+
+  addToWishList() {
+    user.wishlist.push(this.name);
+    console.log(`${this.name} has been added to the wishlist`);
+    console.log(user.wishlist);
+  }
+}
+
+const product1 = new Product("bat", 20);
+console.log(product1.handleAddToWishlist());
